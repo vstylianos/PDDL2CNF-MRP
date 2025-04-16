@@ -8,20 +8,22 @@ from unified_planning.engines import CompilationKind
 from planning_utils.CNF_Encoder import Encoder
 from planning_utils.CNF_Encoder_KBh import Encoder_KBh
 up.shortcuts.get_env().credits_stream = None
-
-
 from pysat.formula import CNF, WCNF
 from pysat.examples.lbx import LBX
 from algorithms import *
 
+# ========================================================================================================
 
 
+
+
+# Import PDDL problem:
 reader = PDDLReader()
 pddl_agent = reader.parse_problem('./instances/blocks/default/original_domain.pddl', './instances/blocks/default/prob1.pddl')
 pddl_human = reader.parse_problem('./instances/blocks/Vary_Kbh/human8.pddl', './instances/blocks/default/prob1.pddl')
 
 
-
+# Ground PDDL problem:
 
 with OneshotPlanner(problem_kind=pddl_agent.kind) as planner:
     result = planner.solve(pddl_agent)
@@ -33,50 +35,34 @@ with Compiler(problem_kind=pddl_agent.kind, compilation_kind=CompilationKind.GRO
     ground_problem_human = grounding_result_human.problem
 
 
-
+# Create KBs:
 horizon = len(plan.actions)
-
 print(plan)
 print(horizon)
 
 KBa, kba_vars = Encoder(ground_problem_agent, horizon).encode()
 KBh, kbh_vars = Encoder_KBh(ground_problem_human, horizon, kba_vars).encode()
 
-
-q_prob1 = CNF(from_clauses=[[kba_vars["pickup_B_0"]], [kba_vars["stack_B_A_1"]], [kba_vars["pickup_C_2"]], [kba_vars["stack_C_B_3"]]])
-
-
-
-
-
-q = q_prob1
-
-
-
-
 # Create query:
-# filter = []
-# for i in KBa.get_model():
-#     if i>0 and KBa.get_name_from_id(i) in KBa.fluents_all_steps:
-#         if int(KBa.get_name_from_id(i)[-1])>2:
-#             filter.append([i])
-        # print(KBa.get_name_from_id(i))
+# Manually for now
+query = CNF(from_clauses=[[kba_vars["pickup_B_0"]], [kba_vars["stack_B_A_1"]], [kba_vars["pickup_C_2"]], [kba_vars["stack_C_B_3"]]])
+
+
+# def make_query(r):
+#     while True:
+#         for l in range(r, len(filter)+1):
+#             for sub in itertools.combinations(list(filter), l):
+#                 query = CNF(from_clauses=sub)
+#                 if skeptical_entailment(KBa.all_formulae(),[], query):
+#                     return query
 
 
 
 
-def make_query(r):
-    while True:
-        for l in range(r, len(filter)+1):
-            for sub in itertools.combinations(list(filter), l):
-                query = CNF(from_clauses=sub)
-                if skeptical_entailment(KBa.all_formulae(),[], query):
-                    return query
 
-
-def translate_clauses_to_english(clauses, kb_vars):
+def map_clauses_to_english(clauses, kb_vars):
     """
-    Translate CNF clauses to English by mapping variable IDs to their names.
+    Converts CNF clauses to English by mapping variable IDs to their names.
     Args:
         clauses: List of CNF clauses (each clause is a list of literals)
         kb_vars: Dictionary mapping variable names to their CNF IDs
@@ -119,7 +105,7 @@ def translate_clauses_to_english(clauses, kb_vars):
                         # No arguments, just the predicate/action name
                         description = f"{negation}{name_with_args} at step {time_step}"
                 else:
-                    # No timestep found or irregular format
+                    # No timestep found or wrong format
                     description = f"{negation}{var_name}"
             else:
                 description = f"{negation}Unknown variable (ID: {var_id})"
@@ -137,16 +123,9 @@ def translate_clauses_to_english(clauses, kb_vars):
     return translations
 
 
-# n_query = make_query(5)
 
-# n_query = CNF()
-# kba = CNF(from_file='./benchmarks/rover1/KBa.cnf')
-# for i in [-9, -486, -500, -514]:
-#     n_query.append([i])
-
-
-print("KBa entails query:", skeptical_entailment(KBa.all_formulae(),[], q))
-print("KBh entails query:", skeptical_entailment(KBh.all_formulae(),[], q))
+print("KBa entails query:", skeptical_entailment(KBa.all_formulae(),[], query))
+print("KBh entails query:", skeptical_entailment(KBh.all_formulae(),[], query))
 
 print(len(KBa.all_formulae()))
 
@@ -212,11 +191,15 @@ def identify_formula_type(clause, kb):
 #     print(f"   Type: {formula_type}")
 #     print(f"   Translation: {translation}")
 
-mr_clauses = model_reconciliation(KBa.all_formulae(), KBh.all_formulae(), q)
-print("\nModel Reconciliation:", mr_clauses)
-print("\nTranslated model reconciliation:")
-for i, clause in enumerate(mr_clauses):
-    translation = translate_clauses_to_english([clause], kba_vars)[0]
+
+
+explanation_clauses = model_reconciliation(KBa.all_formulae(), KBh.all_formulae(), query)
+
+
+print("\nExplanation clauses:", explanation_clauses)
+print("\Converted explanation:")
+for i, clause in enumerate(explanation_clauses):
+    translation = map_clauses_to_english([clause], kba_vars)[0]
     formula_type = identify_formula_type(clause, KBa)
     print(f"{i+1}. Formula: {clause}")
     print(f"   Type: {formula_type}")
