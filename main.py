@@ -193,17 +193,22 @@ def identify_formula_type(clause, kb):
 
 
 
-explanation_clauses = model_reconciliation(KBa.all_formulae(), KBh.all_formulae(), query)
 
 
-print("\nExplanation clauses:", explanation_clauses)
-print("\Converted explanation:")
-for i, clause in enumerate(explanation_clauses):
-    translation = map_clauses_to_english([clause], kba_vars)[0]
-    formula_type = identify_formula_type(clause, KBa)
-    print(f"{i+1}. Formula: {clause}")
-    print(f"   Type: {formula_type}")
-    print(f"   Translation: {translation}")
+if __name__ == "__main__":
+
+    explanation_clauses = model_reconciliation(KBa.all_formulae(), KBh.all_formulae(), query)
+
+
+    print("\nExplanation clauses:", explanation_clauses)
+    print("\Converted explanation:")
+    for i, clause in enumerate(explanation_clauses):
+        translation = map_clauses_to_english([clause], kba_vars)[0]
+        formula_type = identify_formula_type(clause, KBa)
+        print(f"{i+1}. Formula: {clause}")
+        print(f"   Type: {formula_type}")
+        print(f"   Conversion: {translation}")
+
 
 
 
