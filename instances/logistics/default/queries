@@ -1,0 +1,12 @@
+q_prob1 = CNF(from_clauses=[[-kba_vars["at(obj11, apt1)_0"]], [-kba_vars["at(obj11, apt1)_1"]], [-kba_vars["at(obj11, apt1)_2"]],
+                           [-kba_vars["at(obj23, pos1)_3"]], [-kba_vars["at(obj23, pos1)_4"]], [-kba_vars["at(obj23, pos1)_5"]],
+                            [-kba_vars["at(obj23, pos1)_5"]], [-kba_vars["at(obj23, pos1)_6"]], [-kba_vars["at(obj23, pos1)_11"]]])
+
+
+q_prob2 = CNF(from_clauses=[[-kba_vars["at(obj11, apt1)_0"]], [-kba_vars["at(obj11, apt1)_1"]], [-kba_vars["at(obj11, apt1)_2"]],
+                           [-kba_vars["at(obj23, pos1)_3"]], [-kba_vars["at(obj23, pos1)_4"]], [-kba_vars["at(obj23, pos1)_5"]],
+                            [-kba_vars["at(obj23, pos1)_5"]], [-kba_vars["at(obj23, pos1)_6"]], [-kba_vars["at(obj23, pos1)_11"]]])
+
+q_prob3 = CNF(from_clauses=[[-kba_vars["at(obj11, apt1)_0"]], [-kba_vars["at(obj11, apt1)_1"]], [-kba_vars["at(obj11, apt1)_2"]],
+                           [-kba_vars["at(obj23, pos1)_3"]], [-kba_vars["at(obj23, pos1)_4"]], [-kba_vars["at(obj23, pos1)_5"]],
+                            [-kba_vars["at(obj23, pos1)_5"]], [-kba_vars["at(obj23, pos1)_14"]], [-kba_vars["at(obj23, pos1)_15"]]])

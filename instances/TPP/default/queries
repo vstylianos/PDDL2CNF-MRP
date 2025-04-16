@@ -1,0 +1,8 @@
+q_prob1 = CNF(from_clauses=[[-kba_vars["stored(goods1, level1)_0"]], [-kba_vars["stored(goods1, level1)_1"]], [-kba_vars["stored(goods1, level1)_2"]],
+                           [-kba_vars["stored(goods1, level1)_3"]]])
+
+q_prob2 = CNF(from_clauses=[[-kba_vars["stored(goods1, level1)_0"]], [-kba_vars["stored(goods1, level1)_1"]], [-kba_vars["stored(goods1, level1)_2"]],
+                          [-kba_vars["stored(goods1, level1)_3"]], [-kba_vars["stored(goods4, level1)_4"]] ])
+
+q_prob3 = CNF(from_clauses=[[-kba_vars["stored(goods1, level1)_0"]], [-kba_vars["stored(goods1, level1)_1"]], [-kba_vars["stored(goods1, level1)_2"]],
+                           [-kba_vars["stored(goods1, level1)_3"]], [-kba_vars["stored(goods4, level1)_4"]] ])

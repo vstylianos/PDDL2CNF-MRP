@@ -1,0 +1,5 @@
+q_prob1 = CNF(from_clauses=[[-kba_vars["on(crate0, pallet2)_0"]],[-kba_vars["on(crate0, pallet2)_1"]] ])
+
+q_prob2 = CNF(from_clauses=[[-kba_vars["on(crate0, pallet2)_1"]] ])
+
+q_prob3 = CNF(from_clauses=[[-kba_vars["on(crate0, pallet2)_2"]] ])

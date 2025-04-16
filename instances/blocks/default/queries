@@ -1,0 +1,3 @@
+q_prob1 = CNF(from_clauses=[[-kba_vars["on(C, B)_0"]], [-kba_vars["on(C, B)_1"]], [-kba_vars["on(C, B)_2"]],[-kba_vars["on(C, B)_3"]]])
+q_prob2 =  CNF(from_clauses=[[-kba_vars["on(C, B)_0"]], [-kba_vars["on(C, B)_1"]], [-kba_vars["on(D, C)_2"]]])
+q_prob3 =  CNF(from_clauses=[[-kba_vars["on(B, D)_2"]], [-kba_vars["on(B, D)_3"]], [-kba_vars["on(B, D)_4"]]])
